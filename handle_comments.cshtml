@@ -1,0 +1,43 @@
+﻿@{
+          var s = Request.QueryString;
+          var reply = Request[("reply")];
+        /*  string p = s.ToString();
+          string u = p.Remove(0,7);  
+	
+            var current_comment_id = Convert.ToInt32(u);
+            var db = Database.Open("gRg'sblog");
+            var num = 0;
+            var date_made = DateTime.Now;                   
+                     var reply =  (Request["reply"]); 
+                     var user_id = "3";
+               
+           var count = db.Query("SELECT * FROM replies WHERE ID  = @0",  current_comment_id);   
+
+               foreach(var entries in count){
+                 num =  entries.comments;
+               }
+               num = num + 1;
+               var query  = "UPDATE PostTable1 SET comments = " + @num + "WHERE  ID  = @0";
+               db.Execute(query,current_comment_id);                
+              db.Execute("INSERT INTO replies(comment_id, date,comment,user_id)" + "VALUES(@0,@1,@2,@3)",current_comment_id, date_made,reply,user_id); 
+
+ Response.Redirect("~/");/* return to default page */
+
+ 
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title></title>
+    </head>
+    
+    <body>
+        <form>
+        <input type="text" value="@s">
+             
+    </form>
+    </body>
+</html>

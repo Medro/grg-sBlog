@@ -1,0 +1,148 @@
+﻿@{
+
+}
+
+        
+    
+
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8" />
+	<title>gRg's blog</title>
+	<link rel="stylesheet" type="text/css" href="Content/style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.png" />
+<link rel="stylesheet" type="text/css" href="Content/reset.css" />
+<link rel="stylesheet" type="text/css" href="Content/superfish.css" />
+
+<!-- This is for the  customized scrollbar--> 
+<link href="Content/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+     
+      
+        <!--This code below allows the  global styling of the fonts--> 
+        <!--remove and the styling from googlefont is not effected anymore--> 
+       <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+	<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="ie6.css" />
+	<![endif]-->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+
+
+ <link rel="stylesheet" type="text/css" href="jquery/jquery-ui.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.tablesorter.js"></script>	    
+<script type="text/javascript" src="js/tabs.js" ></script>	
+<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+
+
+<script type="text/javascript">
+/***************************************************
+			TABLES
+***************************************************/
+jQuery.noConflict()(function($){
+$(document).ready(function() {
+		$("table").tablesorter({debug: true});
+	});
+});
+
+</script>
+
+<script>
+jQuery.noConflict()(function($){
+  $(document).ready(function() {
+    $("#accordion").accordion();
+  });
+});  
+  </script>
+
+
+
+
+
+    
+</head>
+<body>
+   <div class="topstrip">
+   <ul>
+				
+				<li><a href="Default.cshtml">Blog</a></li>
+				<li><a href="Hangouts.php">Hangouts</a></li>
+				<li><a href="Connect.php">Connect</a></li>
+			</ul></div>
+
+ 
+<div id="wrapper"><!-- START WRAPPER-->
+        <div id="tagline"><!--START TAGLINE-->
+          	
+       </div><!--END TAGLINE-->	      
+    @Html.ValidationSummary()
+
+	<div class ="accrd"><!--START Postpage-->
+     
+ <div id="accordion">
+						<h3><a href="#"></a></h3>
+						<div>
+							<p>
+								
+							</p>
+						</div>
+						<h3><a href="#">CONTENT MANAGEMENT</a></h3>
+						<div>
+							<p>
+							 <ul>
+                                <li><a href="Target_div_Admin.cshtml">Post new content</a></li>
+                                <li><a href="Update_content_Admin.cshtml">Update existing content</a></li><br/>
+								<li><a href="Delete_content_Admin.cshtml">Delete a Post</a></li<br/>
+                                <li><a href="Delete_content_Admin.cshtml">Delete a Comment</a></li><br/>
+                                <li><a href="Delete_content_Admin.cshtml">Censure a Comment</a></li>	<br/>															
+							</ul>
+							</p>
+						</div><h3><a href="#">USER MANAGEMENT</a></h3>
+						<div>
+							<p>
+								 <ul>
+                                <li><a href="Target_div_Admin.cshtml">Send user message </a></li>
+                                <li><a href="Update_content_Admin.cshtml">Suspend user account</a></li>
+								<li><a href="Delete_content_Admin.cshtml">Disable user account</a></li>
+                                <li><a href="Delete_content_Admin.cshtml">Ban user account</a></li>							
+								
+							</ul>
+							</p>
+						</div><h3><a href="#">REQUEST HIGHER SUPPORT</a></h3><div>
+						 
+							<p>
+								<li><a href="Target_div_Admin.cshtml">Report Technical issue</a></li>
+                                
+							</p>
+						</div>
+                        <!--<h3><a href="#"></a></h3>
+						<div>
+							<p>
+								
+							</p>
+						</div>
+						<h3><a href="#"></a></h3>
+						<div>
+							<p>
+								
+							</p>
+							<ul>
+								
+							</ul>
+						</div>-->
+						
+					</div>
+    </div><!--END Postpage-->
+     </div>
+<div class="footer">
+			  <div id ="twitter"></div>         
+	      <div id ="facebook"><br/>&copy;Copyright <a href="#">Amediagrahics</a> All Rights Reserved
+                &nbsp<a href="#">About</a> &nbsp&nbsp&nbsp <a href="#">Sponsors</a> 
+               &nbsp&nbsp&nbsp <a href="#">Creators</a> 
+               &nbsp&nbsp&nbsp  <a href="#">Hangouts</a>  <a href="#"> partners</a> 
+                  &nbsp&nbsp&nbsp<a href="#">Developers</a> <a href="#">Advertising</a> </div> 
+    </div>  
+	
+</body>
+		
+	</html>

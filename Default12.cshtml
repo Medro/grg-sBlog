@@ -1,0 +1,362 @@
+﻿@{
+     Layout = "~/_Layout2.cshtml";
+    //open the database
+var db = Database.Open("gRg'sblog");
+var posts1 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable1"); //select the entries from the first table of databse
+var posts2 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable2"); 
+var posts3 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable3"); 
+var posts4 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable4 "); 
+HttpContext.current.Session["username"] = UserName;
+
+//check if the user is logged in
+if   (@Session["username"] == null)
+{
+     var unknown = Session["username"];
+
+}
+
+else {
+     
+    var unknown = Session["username"].ToString();
+}
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>grg's blog</title>
+	<link rel="stylesheet" type="text/css" href="Content/style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.png" />
+<link rel="stylesheet" type="text/css" href="Content/reset.css" />
+<link rel="stylesheet" type="text/css" href="Content/superfish.css" />
+
+<!-- This is for the  customized scrollbar--> 
+<link href="Content/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+     
+      
+        <!--This code below allows the  global styling of the fonts--> 
+        <!--remove and the styling from googlefont is not effected anymore--> 
+       <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+	<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="ie6.css" />
+	<![endif]-->
+
+     
+  
+   <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+
+</head>
+<body>
+   <div class="topstrip">
+   <ul>
+				
+				<li><a href="Default.cshtml">Blog</a></li>
+				<li><a href="Hangouts.cshtml">Hangouts</a></li>
+				<li><a href="Connect.cshtml">Connect</a></li>
+               
+			</ul>
+   </div>
+
+    
+    <div class="logged_in_or_not">
+  <!-- <div  id="triangle-down"></div>--> 
+        <div id="triangle-down" hidden></div>
+         <div id="movemain" hidden>
+          @{unknown;}    
+         </div>
+             <div id="moveboth"></div>
+        </div>
+    
+    <div class="logged_out"><a href="Sign_in.cshtml">Sign-in</a></div>
+     <div class="profilespot"></div>
+   
+
+ 
+<div id="wrapper"><!-- START WRAPPER-->
+        <div id="tagline"><!--START TAGLINE--></div>
+           
+      
+           
+            
+	</div>
+         <div class ="grg">gRg's blog
+         </div>      		
+    	      
+	
+      
+
+           <div id="_block1" class="block1"> 
+         		@foreach(var post in posts1.OrderByDescending(s => s.ID)) {
+                <br/>
+                 <p>@post.Title <br/> @post.Summary</p>
+                               
+                  <br/><br/>
+                  <p>@post.Story_Preview</p>
+
+                <form action="/ViewPost1.cshtml" method ="GET" id="see_more1">   
+                 <input type="text" name="postID" value="@post.ID" hidden> 
+                   <a href="javascript:{}" onclick="document.getElementById('see_more1').submit(); return false;" class="seemore" >...see more</a><br/><br/>
+                 </form>
+
+         
+                       
+                        }                 
+                      </div> 
+    
+
+         <div id="_block2" class="block2"> 
+         	
+       		@foreach(var post in posts2.OrderByDescending(s => s.ID)) {
+             
+             <br/>
+             <p>@post.Title <br/> @post.Summary</p><br/><br/>
+             <p>@post.Story_Preview</p>
+             <form action="/ViewPost2.cshtml" method ="GET" id="see_more2">    
+                  <input type="text" name="postID" value="@post.ID" hidden>            
+                   <a href="javascript:{}" onclick="document.getElementById('see_more2').submit(); return false;" class="seemore">...see more</a><br/><br/>
+                 </form>
+               
+                            }
+        
+          </div>
+
+    <br/><br/>
+
+     <div id="_block3" class="block3"> 
+       	@foreach(var post in posts3.OrderByDescending(s => s.ID)) {
+
+             <p>@post.Title <br/> @post.Summary</p><br/><br/>
+            <p>@post.Story_Preview<br/><br/></p>
+              <form action="/ViewPost3.cshtml" method ="GET" id="see_more3">  
+                   <input type="text" name="postID" value="@post.ID" hidden>              
+                   <a href="javascript:{}" onclick="document.getElementById('see_more3').submit(); return false;" class="seemore">...see more</a><br/><br/>
+                 </form>
+                }
+          </div>
+
+     <div id="_block4" class="block4"> 
+         		@foreach(var post in posts4.OrderByDescending(s => s.ID)) {
+
+             <p>@post.Title <br/> @post.Summary</p><br/><br/>
+             <p>@post.Story_Preview<br/><br/></p>
+             <form action="/ViewPost4.cshtml" method ="GET" id="see_more4">  
+                  <input type="text" name="postID" value="@post.ID" hidden>              
+                   <a href="javascript:{}" onclick="document.getElementById('see_more4').submit(); return false;" class="seemore">...see more</a><br/><br/>
+                 </form>
+            <br/><br/>
+                            }
+          
+                      </div> 
+
+     <div id="_block6" class="block6"> 
+     <ul>
+      <li></li>
+         </ul>
+     </div>
+
+
+     <div id="_block8" class="block8"> 
+         	<!--<video width="250" height="250" controls>
+  <source src="./Videos/hwsm.mp4" type="video/mp4">
+  Sorry Your browser does not support the element.
+</video><br/>
+         <a href="#" onclick="">Like</a >|  <a href="#" onclick="">Share</a > | <a href="#" onclick="">Download</a >-->
+          </div>
+
+    <div id="_block9" class="block9"> 
+         	        
+          </div>
+
+     <div id="_block10" class="block10"> 
+         	
+         </div>
+
+       <div id="_block11" class="block11"> 
+         	<p></p>
+       		
+         </div>
+
+  
+  
+    
+    
+
+    
+  
+
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="jquery/jquery-1.7.2.min.js"%3E%3C/script%3E'))</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script>!window.jQuery.ui && document.write(unescape('%3Cscript src="jquery/jquery-ui-1.8.21.custom.min.js"%3E%3C/script%3E'))</script>
+	<!-- mousewheel plugin -->
+      <script src="Content/jquery.mousewheel.min.js"></script>
+	<!-- custom scrollbars plugin -->
+	<script src="Content/jquery.mCustomScrollbar.js"></script>
+      <script>
+		(function($){
+			$(window).load(function(){
+				$("#amedro_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                    $("#_block1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+
+                $("#_block2").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});               
+                     $("#_block3").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                		$("#_block4").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                   $("#_block5").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});   
+                    $("#_block6").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                
+		  
+                 $("#_block8").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});  
+                   $("#_block9").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});  
+                 $("#_block10").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});  
+                $("#_block11").mCustomScrollbar({
+					scrollEasing:"easeOutQuint",
+					autoDraggerLength:false
+				});
+                $(".content_5").mCustomScrollbar({
+					horizontalScroll:true,
+					scrollButtons:{
+						enable:true
+					}
+				});
+                	$(".Sidebar").mCustomScrollbar({
+					set_height:"85%",
+					scrollInertia:900,
+					scrollEasing:"easeOutQuint",
+					mouseWheel:false
+				});
+                  $( "#triangle-down" ).click(function(){
+             $( ".profilespot" ).animate( { height: "20%" }, { queue: false, duration: 800 })
+     .animate({ fontSize: "24px" }, 1500 )
+     .animate({ borderRightWidth: "15px" }, 1500 );
+});
+          $( "#movemain" ).click(function(){
+  $( "#_block1" ).animate({ width: "90%" }, 1000 )
+     .animate({ fontSize: "24px" }, 1000 )
+     .animate({ borderLeftWidth: "15px" }, 1000 );
+});
+          $( "#moveboth" ).click(function(){
+  $( "#triangle-down" ).add( "#movemain" ).click();
+});
+ 
+ 
+               
+			});
+		})(jQuery);
+
+        	
+	</script>
+
+
+
+  
+
+    <div class="content_5 content">
+    		<h4></h4>
+			<div class="images_container">
+				<img src="demo_files/1.jpg" />
+				<img src="demo_files/2.jpg" />
+                <img src="demo_files/3.jpg" />
+				<img src="demo_files/4.jpg" />
+                <img src="demo_files/5.jpg" />
+				<img src="demo_files/6.jpg" />
+			
+			</div>
+		</div>
+
+    <div class="footer">
+       
+        <div id="About">
+        <p>About</p>
+            <div class ="seperator"></div>
+            <ul>
+            <li><a href ="#">System Admins</a></li>
+            <li><a href ="http://www.gbenga-amedrovi.info">Developers</a></li>
+            <li><a href ="#">Website Owners</a></li>
+            <li><a href ="#">Sponsors</a></li>
+            <li><a href ="#">Moderators</a></li>
+        </ul>
+          
+       </div>
+
+        <div id="Connect">
+        <p>Info</p>
+            <ul>
+            <li><a href ="#">Entertainment</a></li>
+            <li><a href ="#">Features</a></li>
+            <li><a href ="#">Feedback</a></li>
+             <li><a href ="#">Associates</a></li>
+             <li><a href ="#">Phone</a></li>
+           
+        </ul>
+          
+       </div>
+
+        <div id="Pages">
+        <p>Pages</p>
+            <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Mail us</a></li>
+            <li><a href="#">Place sponsorship</a></li>
+            <li><a href="#">Advertise</a></li>
+        </ul>
+          
+       </div>
+       <div id="Social">
+        <p>Connect with us</p>
+            <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Youtube</a></li>
+         
+        </ul>
+          
+       </div>
+    </div>
+	
+</body>
+		
+	</html>

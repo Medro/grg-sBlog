@@ -1,0 +1,86 @@
+﻿@{
+   
+    Layout = "~/_Layout2.cshtml";
+    var db = Database.Open("gRg'sblog"); /*receives posted data from another page*/
+     var posted = (Request["postID"]);   
+    var story4 = db.QuerySingle("SELECT * FROM PostTable4 WHERE ID = @0", posted); /* runs a singular select from table 4*/
+    /* run all associated comments */
+    var comments = db.Query("SELECT * FROM comments WHERE post_id  = @0", posted);
+    if (story4 == null) {
+        Response.Redirect("~/");/* return to default page */
+        db.Close();
+    }
+       
+
+}
+
+@{
+ var comment = Request["comment"];
+     if(IsPost) //if a post is comitted and the value of comment is empty 
+           {
+               if(comment.IsEmpty()){
+                 ModelState.AddError("comment", "comment cannot be empty");
+                   
+             }
+         }
+  
+
+
+    if(IsPost&&ModelState.IsValid)//if a post is comitted and the Model State is Valid 
+    {   
+      
+       var date = DateTime.Now;
+       var rating = "P";
+       var user_email = "amedrovi@gmail.com";
+     
+       
+        Database.Open("gRg'sblog")
+        .Execute("INSERT INTO comments(post_id,comment,Date,rating,user_email)" + "VALUES(@0,@1,@2,@3,@4)",posted,comment,date,rating,user_email);
+        db.Close();
+    }
+
+
+    }
+
+
+
+@section Header {
+
+    
+}
+
+@section Body{
+
+
+
+<div id="_story1" class="story1"> 
+                 <p>@story4.Title <br/> @story4.Summary</p>                              
+                  <br/><br/>
+                  <p>@story4.Body</p><br/><br/>
+                    
+                      </div> 
+
+
+
+
+<div id="_comment3" class="comment3"> 
+       	@foreach(var the_comment in comments) {
+                <br/>
+                 <p>@the_comment.comment </p>
+     }
+                      </div> 
+
+
+<div id="_comment5" class="comment5"> 
+         		<div class="comment_logo"><a href="">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</a></div>
+                      </div> 
+}
+
+}
+
+@section Footer {
+
+}
+<div>
+
+</div>

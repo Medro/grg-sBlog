@@ -1,0 +1,172 @@
+﻿@{
+     Layout = "~/_Layout.cshtml";
+       //open the database
+      
+}
+
+
+
+@section Header {
+
+   <!-- inserts the code from the header defined in the layout file-->
+   
+}
+
+@section Body{
+  <script>
+     /*the script below reoves the div from the layout since it's not needed*/
+
+     $(function () {
+         $("#_comment1-2").remove();
+
+     });
+</script>
+ <script>
+     /*the script below reoves the div from the layout since it's not needed*/
+
+     $(function () {
+         $(".post_comment").remove();
+
+     });
+</script>
+
+
+<!-- write code to handle refreshes on th page and remove the unwanted divs below-->
+
+ 
+<div id="wrapper"><!-- START WRAPPER-->
+        <div id="tagline"><!--START TAGLINE--></div>
+           
+      
+           
+            
+	</div>
+         <div class ="grg">
+             gRg's blog
+         </div>      		
+    	      
+	
+
+           <div id="_block1" class="block1"> 
+          @{
+              var db1 = Database.Open("gRg'sblog");
+              var postID = 0;
+                var posts1 = db1.Query("SELECT * FROM PostTable1"); //select the entries from the first table of databse
+         		foreach(var post in posts1.OrderByDescending(s => s.ID)) {
+
+                 <br/>
+                 <p>@post.Title <br/> @post.Summary  <br/> views @post.views &nbsp&nbsp Comments  @post.comments &nbsp&nbsp </p>
+                               
+                  <br/><br/>
+                  <p>@post.Story_Preview</p>   
+                  
+                <a href="ViewPost1.cshtml?postID=@post.ID">see more</a> <br/>
+                 <p></p>
+                    db1.Close();
+                     
+                               }                                 
+                   
+             }
+                 </div> 
+
+         <div id="_block2" class="block2"> 
+          @{
+             
+               var db2 = Database.Open("gRg'sblog");
+                var posts2 = db2.Query("SELECT * FROM PostTable2"); //select the entries from the first table of databse
+         		foreach(var post in posts2.OrderByDescending(s => s.ID)) {
+
+                 <br/>
+                 <p>@post.Title <br/> @post.Summary  <br/> views @post.views &nbsp&nbsp Comments  @post.comments &nbsp&nbsp </p>
+                               
+                  <br/><br/>
+                  <p>@post.Story_Preview</p>   
+                  
+                <a href="ViewPost1.cshtml?postID=@post.ID">see more</a> <br/>
+                 <p></p>
+                     
+                               }                                 
+                   
+             }
+                 </div> 
+
+    <br/><br/>
+
+   <div id="_block3" class="block3"> 
+          @{
+             
+               var db3 = Database.Open("gRg'sblog");
+                var posts3 = db3.Query("SELECT * FROM PostTable2"); //select the entries from the first table of databse
+         		foreach(var post in posts2.OrderByDescending(s => s.ID)) {
+
+                 <br/>
+                 <p>@post.Title <br/> @post.Summary  <br/> views @post.views &nbsp&nbsp Comments  @post.comments &nbsp&nbsp </p>
+                               
+                  <br/><br/>
+                  <p>@post.Story_Preview</p>   
+                  
+                <a href="ViewPost1.cshtml?postID=@post.ID">see more</a> <br/>
+                 <p></p>
+                     
+                               }                                 
+                   
+             }
+                 </div> 
+
+     <div id="_block4" class="block4"> 
+          @{
+             
+               var db4 = Database.Open("gRg'sblog");
+                var posts4 = db4.Query("SELECT * FROM PostTable2"); //select the entries from the first table of databse
+         		foreach(var post in posts2.OrderByDescending(s => s.ID)) {
+
+                 <br/>
+                 <p>@post.Title <br/> @post.Summary  <br/> views @post.views &nbsp&nbsp Comments  @post.comments &nbsp&nbsp </p>
+                               
+                  <br/><br/>
+                  <p>@post.Story_Preview</p>   
+                  
+                <a href="ViewPost1.cshtml?postID=@post.ID">see more</a> <br/>
+                 <p></p>
+                     
+                               }                                 
+                   
+             }
+                 </div> 
+
+     <div id="_block6" class="block6"> 
+     <ul>
+      <li></li>
+         </ul>
+     </div>
+
+
+     <div id="_block8" class="block8"> 
+         	<!--<video width="250" height="250" controls>
+  <source src="./Videos/hwsm.mp4" type="video/mp4">
+  Sorry Your browser does not support the element.
+</video><br/>
+         <a href="#" onclick="">Like</a >|  <a href="#" onclick="">Share</a > | <a href="#" onclick="">Download</a >-->
+          </div>
+
+ <div id="_block9" class="block9"> 
+         	
+         </div>
+ 
+
+     <div id="_block10" class="block10"> 
+         	
+         </div>
+
+       <div id="_block11" class="block11"> 
+         	<p></p>
+       		
+         </div>
+
+  }
+  
+    
+
+@section Footer {
+
+}

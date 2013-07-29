@@ -1,0 +1,314 @@
+﻿@{
+        //open the database
+var db = Database.Open("gRg'sblog");
+var posts1 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable1"); //select the entries from the first table of databse
+var posts2 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable2"); 
+var posts3 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable3"); 
+var posts4 = db.Query("SELECT ID,Title,Story_Preview,Summary FROM PostTable4 "); 
+
+}
+
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+       @RenderSection("Header")  
+        
+        <meta charset="utf-8" />
+        <title>grg's blog</title>
+	<link rel="stylesheet" type="text/css" href="Content/style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.png" />
+<link rel="stylesheet" type="text/css" href="Content/reset.css" />
+<link rel="stylesheet" type="text/css" href="Content/superfish.css" />
+
+<!-- This is for the  customized scrollbar--> 
+<link href="Content/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+     
+      
+        <!--This code below allows the  global styling of the fonts--> 
+        <!--remove and the styling from googlefont is not effected anymore--> 
+       <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+	<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="ie6.css" />
+	<![endif]-->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script>
+    /*used the same element from another page but added dynamism using Javascript*/
+    
+    $(function () {      
+        $(".story1").height(900);
+    });
+</script>
+
+<script type="text/javascript">
+    /* this function ensures that all external links must be opened on another tab*/
+    $(function () {
+        $("a[href^='http://']").attr("target", "_blank");
+    });
+</script>
+
+
+ <div class="topstrip">
+   <ul>
+				
+				<li><a href="Default.cshtml">Blog</a></li>
+				<li><a href="Hangouts.cshtml">Hangouts</a></li>
+				<li><a href="Connect.cshtml">Connect</a></li>
+               
+			</ul>
+   </div>
+
+    
+    <div class="logged_in_or_not">
+   @{ 
+         object username;
+       if (Session["username"] != null)
+      
+       {
+           username = Session["username"];
+             @username; <a href="sign_out.cshtml">Sign-out</a>
+  <div id="moveboth_drop_down"></div> <!--moves all the divs down to allow the user to see the config page-->
+       }
+          
+       else {
+          username = "";
+             @username; <a href="sign_in.cshtml">Sign-in</a>
+                  }
+
+                 
+      }
+        <div id="triangle-down" hidden></div>
+         <div id="movemain" hidden>
+        
+         </div>
+           
+             <div id="moveboth_drag_up"></div> <!--moves all the divs back to their original position-->
+        </div>
+    
+    <div class="logged_out"><h1><a href="Sign_in.cshtml"></a></h1></div>
+     <div class="profilespot"><!--This holds all the user  profile  minipage on the default page--> 
+     <div id="wats"> 
+     </div>
+   
+     </div>
+      
+        </head>
+     
+
+    <body>
+              @RenderSection("body")
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="jquery/jquery-1.7.2.min.js"%3E%3C/script%3E'))</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script>!window.jQuery.ui && document.write(unescape('%3Cscript src="jquery/jquery-ui-1.8.21.custom.min.js"%3E%3C/script%3E'))</script>
+	<!-- mousewheel plugin -->
+      <script src="Content/jquery.mousewheel.min.js"></script>
+	<!-- custom scrollbars plugin -->
+	<script src="Content/jquery.mCustomScrollbar.js"></script>
+          <script>
+		(function($){
+			$(window).load(function(){
+				$("#amedro_1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                    $("#_block1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+
+                $("#_block2").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});               
+                     $("#_block3").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                		$("#_block4").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+
+
+
+                   $("#_block5").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});   
+                    $("#_block6").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                
+		  
+                 $("#_block8").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});  
+                   $("#_block9").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});  
+                 $("#_block10").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				}); 
+                
+                 $("#_block12").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                 
+                $("#_block11").mCustomScrollbar({
+					scrollEasing:"easeOutQuint",
+					autoDraggerLength:false
+				});
+
+                   $("#_comment1-2").mCustomScrollbar({
+					scrollEasing:"easeOutQuint",
+					autoDraggerLength:false
+				});
+                   $("#_comment3").mCustomScrollbar({
+					scrollEasing:"easeOutQuint",
+					autoDraggerLength:false
+				});
+                   $("#_comment5").mCustomScrollbar({
+					scrollEasing:"easeOutQuint",
+					autoDraggerLength:false
+				});
+                   $(".content_5").mCustomScrollbar({
+					horizontalScroll:true,
+					scrollButtons:{
+						enable:true
+					}
+				});
+                   $(".Sidebar").mCustomScrollbar({
+					set_height:"85%",
+					scrollInertia:900,
+					scrollEasing:"easeOutQuint",
+					mouseWheel:false
+				});
+
+
+                  $( "#plus_comment" ).click(function(){
+                  $("#plus_comment").attr("hidden", "false");
+                  });
+
+                   $( "#triangle-down" ).click(function(){
+                   $( ".profilespot" ).animate( { top: "40px" }, { queue: false, duration: 1000 }); //you can extend the code by adding-->.animate({ borderRightWidth: "15px" }, 1500 );         
+});
+              //movemain function will move all this divs below
+          $( "#movemain" ).click(function(){
+          $( "#_block1" ).animate({ top: "61%" }, 1000 )  
+          $( "#_block2" ).animate({ top: "40%" }, 1000 )
+          $( "#_block3" ).animate({ top: "25%" }, 1000 )
+          $( "#_block4" ).animate({ top: "57%" }, 1000 )         
+          $( "#_block6" ).animate({ top: "59%" }, 1000 )
+          $( "#_block8" ).animate({ top: "121%" }, 1000 )
+          $( "#_block9" ).animate({ top: "148%" }, 1000 )
+          $( "#_block10" ).animate({ top: "172%" }, 1000 )
+          $( "#_block11" ).animate({ top: "59%" }, 1000 )
+          $( ".grg" ).animate({ top: "49%" }, 1000 )
+          $("#moveboth_drop_down").animate({right:"-200px"}, 6000 ) // moves the drop down triangle
+          //end the re-adjustment of jquery //
+       
+
+});
+          $( "#moveboth_drop_down" ).click(function(){
+          $( "#triangle-down" ).add( "#movemain" ).click();
+});
+ 
+ 
+               
+			});
+		})(jQuery);
+
+        	
+	</script>
+
+    
+      
+
+</body>
+
+
+@RenderSection("Footer")
+<footer>
+    <div class ="footer">
+ <div id="About">
+        <p>About</p>
+            <div class ="seperator"></div>
+            <ul>
+            <li><a href ="System_Admins.cshtml">System Admins</a></li>
+            <li><a href ="http://www.gbenga-amedrovi.info">Developers</a></li>
+            <li><a href ="Website_owners.cshtml">Website Owners</a></li>
+            <li><a href ="Sponsors.cshtml">Sponsors</a></li>
+            <li><a href ="Moderators.cshtml">Moderators</a></li>
+        </ul>
+          
+       </div>
+
+        <div id="Connect">
+        <p>Info</p>
+            <ul>
+            <li><a href ="Entertainment.cshtml">Entertainment</a></li>
+            <li><a href ="Features.cshtml">Features</a></li>
+            <li><a href ="Feedback.cshtml">Feedback</a></li>
+             <li><a href ="Associates.cshtml">Associates</a></li>
+             <li><a href ="Phone.cshtml">Phone</a></li>
+           
+        </ul>
+          
+       </div>
+
+        <div id="Pages">
+        <p>Pages</p>
+            <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Mail us</a></li>
+            <li><a href="#">Place sponsorship</a></li>
+            <li><a href="#">Advertise</a></li>
+        </ul>
+          
+       </div>
+       <div id="Social">
+        <p>Connect with us</p>
+            <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Youtube</a></li>
+         
+        </ul>
+          
+       </div>
+</div>
+
+@if (IsSectionDefined("Footer")) {
+      RenderSection("Footer");
+  }
+  else { 
+      <span></span>   
+  }
+</footer>
+</body>
+
+</html>
+@{
+    db.Close();
+    }

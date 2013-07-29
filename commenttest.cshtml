@@ -1,0 +1,197 @@
+﻿@{
+   
+
+    var db = Database.Open("gRg'sblog"); /*receives posted data from another page*/
+    //var posted = Request.Params[""];
+    var posted = UrlData[0].AsInt();
+    var story1 = db.QuerySingle("SELECT * FROM PostTable1 WHERE ID = @0", posted); /* runs a singular select statement*/
+    if (story1 == null) {
+        Response.Redirect("~/");/* return to default page */
+    }
+    
+
+
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+   
+        <meta charset="utf-8" />
+        <title>grg's blog</title>
+	<link rel="stylesheet" type="text/css" href="Content/style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.png" />
+<link rel="stylesheet" type="text/css" href="Content/reset.css" />
+<link rel="stylesheet" type="text/css" href="Content/superfish.css" />
+
+<!-- This is for the  customized scrollbar--> 
+<link href="Content/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+     
+      
+        <!--This code below allows the  global styling of the fonts--> 
+        <!--remove and the styling from googlefont is not effected anymore--> 
+       <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+	<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="ie6.css" />
+	<![endif]-->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<script>
+    /*used the same element from another page but added dynamism using Javascript*/
+    
+    $(function () {      
+        $(".story1").height(900);
+    });
+</script>
+
+  <style>
+      
+   
+    </style>
+
+        </head>
+    
+
+    <body>
+           
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+	<script>!window.jQuery && document.write(unescape('%3Cscript src="jquery/jquery-1.7.2.min.js"%3E%3C/script%3E'))</script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+	<script>!window.jQuery.ui && document.write(unescape('%3Cscript src="jquery/jquery-ui-1.8.21.custom.min.js"%3E%3C/script%3E'))</script>
+	<!-- mousewheel plugin -->
+      <script src="Content/jquery.mousewheel.min.js"></script>
+	<!-- custom scrollbars plugin -->
+	<script src="Content/jquery.mCustomScrollbar.js"></script>
+      <script>
+		(function($){
+			$(window).load(function(){
+                    $("#_story1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                   $("#_comment1").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                $("#_comment1-2").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                  $("#_comment2").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                   $("#_comment3").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                   $("#_comment4").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                         $("#_comment5").mCustomScrollbar({
+					scrollButtons:{
+						enable:true
+					}
+				});
+                });
+		})(jQuery);   
+        
+            	
+	</script>
+
+        <div class="topstrip">
+   <ul>
+				
+				<li><a href="Default.cshtml">Blog</a></li>
+				<li><a href="Hangouts.cshtml">Hangouts</a></li>
+				<li><a href="Connect.cshtml">Connect</a></li>
+                <li><a href="Login.cshtml">Sign in</a></li>
+			</ul>
+   </div>
+
+
+        <div id="_story1" class="story1"> 
+                 
+                      </div> 
+
+<div id="_comment1" class="comment1"> 
+         		
+                      </div>
+<div id="_comment1-2" class="comment1-2"> 
+         		
+                      </div>
+
+<div id="_comment3" class="comment3"> 
+         		
+                      </div> 
+
+<div id="_comment4" class="comment4"> 
+         		
+                      </div> 
+<div id="_comment5" class="comment5"> 
+         		
+                      </div> 
+</body>
+
+<footer>
+    <div class ="footer">
+ <div id="About">
+        <p>About</p>
+            <div class ="seperator"></div>
+            <ul>
+            <li><a href ="System_Admins.cshtml">System Admins</a></li>
+            <li><a href ="http://www.gbenga-amedrovi.info">Developers</a></li>
+            <li><a href ="Website_owners.cshtml">Website Owners</a></li>
+            <li><a href ="Sponsors.cshtml">Sponsors</a></li>
+            <li><a href ="Moderators.cshtml">Moderators</a></li>
+        </ul>
+          
+       </div>
+
+        <div id="Connect">
+        <p>Info</p>
+            <ul>
+            <li><a href ="Entertainment.cshtml">Entertainment</a></li>
+            <li><a href ="Features.cshtml">Features</a></li>
+            <li><a href ="Feedback.cshtml">Feedback</a></li>
+             <li><a href ="Associates.cshtml">Associates</a></li>
+             <li><a href ="Phone.cshtml">Phone</a></li>
+           
+        </ul>
+          
+       </div>
+
+        <div id="Pages">
+        <p>Pages</p>
+            <ul>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">Mail us</a></li>
+            <li><a href="#">Place sponsorship</a></li>
+            <li><a href="#">Advertise</a></li>
+        </ul>
+          
+       </div>
+       <div id="Social">
+        <p>Connect with us</p>
+            <ul>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">Twitter</a></li>
+            <li><a href="#">Youtube</a></li>
+         
+        </ul>
+          
+       </div>
+</div>
+<footer>
+</footer>
+</body>
+
+</html>

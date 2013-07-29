@@ -1,0 +1,232 @@
+﻿@{
+var db = Database.Open("gRg'sblog");
+var username = Request["Username"];
+var email = Request["Email"];
+var sign_update = DateTime.Now;
+var password = Request["Password"];
+var confirm_password = Request["Confirm_Password"];
+var security_answer = Request["Security_answer"];
+var security_question = Request["Security_question"];
+
+  <script type="text/javascript" src="jquery/jquery-1.8.0.min.js"></script>
+  <script type="text/javascript" src="jquery/jquery-1.8.3.js"></script>
+   
+
+
+var check_email = db.Query("SELECT email FROM users "); 
+
+if(IsPost)
+        {
+            if(email.IsEmpty()){
+                ModelState.AddError("Email", "email is required");
+               
+            }
+
+
+       if(username.IsEmpty()){
+                ModelState.AddError("Username", "username is required");
+            }
+
+
+        if(password.IsEmpty()){
+                ModelState.AddError("Password", "Password is required");
+            }
+
+
+            if(confirm_password.IsEmpty()){
+                ModelState.AddError("Confirm_Password", "Password confrimation is required");
+            }
+
+             if(security_answer.IsEmpty()){
+                ModelState.AddError("Security_answer", "Password confrimation is required");
+            }
+
+ }
+}
+
+ @{
+    if(IsPost&&ModelState.IsValid)
+    {           
+         if (password == confirm_password)
+                {    //check if the passwords match
+                     var check_if_exist = db.QuerySingle("SELECT * FROM users WHERE email = @0", email); /* runs a singular select statement*/
+                            
+                            if (check_if_exist == null)
+                             {
+                                security_answer = (security_answer.ToLower()).Replace(" ","");
+                                email = (email.ToLower()).TrimEnd();
+                                Database.Open("gRg'sblog")
+                                 .Execute("INSERT INTO users(username,email,sign_up_date,Security_question,Security_answer,password)" + "VALUES(@0,@1,@2,@3,@4,@5)",username,email,sign_update,security_question,security_answer,password);
+                                      //send email to account owner                                                                        
+                                                 var  body = "Welcome to grgs blog, entertainment begins here ";                
+                                                 WebMail.SmtpServer = "smtp.grg-online.net";
+                                                 WebMail.SmtpPort = 25;
+                                                 WebMail.EnableSsl = false;
+
+                                                //Enter your Hotmail credentials for UserName/Password and a "From" address for the e-mail
+                                                WebMail.UserName = "Team_grg@grg-online.net";
+                                                WebMail.Password = "abcd@1234";
+                                                WebMail.From = "Team_grg@grg-online.net";                                               
+ 
+                                              WebMail.Send(to: email, subject: "Welcome to grg's blog", body: body);
+                               Response.Redirect("Default.cshtml");/* return to default page */         
+                             }
+
+                           else
+                                {
+                                    //ModelState.AddError("Email", "email already exists");-dont display the error msg #hacked                      
+                                    <script type="text/javascript"> //this script changes the email border to red
+                                        $(function () {
+                                            ($("#email").css({
+                                                //backgroundColor: '#50B23D',
+                                         color: 'red',     
+                                         border: 'solid 2px #b32400'     
+                                                                                                
+                                            })
+                                            )
+                                        })
+                                         $(function () {
+                                            ($("#email").attr({                                          
+                                         value: 'email already exist'                                         
+                                                                                                
+                                            })
+                                            )
+                                        })
+                                     </script>
+                                    }
+                         }
+                                   
+        else{
+                               //ModelState.AddError("Password", "Password does not match");    -dont display the error msg #hacked              
+                                    <script type="text/javascript"> //this script changes the email border to red
+                                        $(function () {
+                                            ($("#password").css({
+                                                //backgroundColor: '#50B23D',
+                                         color: 'red',     
+                                         border: 'solid 2px #b32400'     
+                                                                                                
+                                            })
+                                            )
+                                        })
+                                        
+                                      
+                                     </script>
+
+                      }
+
+            }
+                           
+                            
+ }
+        
+           
+   
+
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8" />
+	<title>gRg's blog</title>
+	<link rel="stylesheet" type="text/css" href="Content/style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.png" />
+<link rel="stylesheet" type="text/css" href="Content/reset.css" />
+<link rel="stylesheet" type="text/css" href="Content/superfish.css" />
+
+<!-- This is for the  customized scrollbar--> 
+<link href="Content/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+     
+      
+        <!--This code below allows the  global styling of the fonts--> 
+        <!--remove and the styling from googlefont is not effected anymore--> 
+       <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+	<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="ie6.css" />
+	<![endif]-->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+</head>
+<body>
+     <script>
+     /*the script below reoves the div from the layout since it's not needed*/
+
+     $(function () {
+         $("#_comment1-2").remove();
+
+     });
+</script>
+   <div class="topstrip">
+   <ul>
+				
+				<li><a href="Default.cshtml">Blog</a></li>
+				<li><a href="Hangouts.php">Hangouts</a></li>
+				<li><a href="Connect.php">Connect</a></li>
+			</ul></div>
+
+ 
+<div id="wrapper"><!-- START WRAPPER-->
+        <div id="tagline"><!--START TAGLINE-->
+          	
+       </div><!--END TAGLINE-->	      
+  <!--#hacked code@Html.ValidationSummary()-->
+
+	<div id="post-page"><!--START Postpage-->
+     
+  <form method="post" action="">
+
+ @Html.ValidationMessage("username", "*")
+<label for="Username">Username</label><br/>
+<input type="text" name="username"/><br/>
+
+
+@Html.ValidationMessage("email", "*")
+<label for="Email">Email</label><br/>  
+<input type="text" name="email" id ="email"/><br/>
+
+
+@Html.ValidationMessage("password", "*")
+<label for="Password">Password</label><br/>  
+<input type="password" name="password" id ="password" /><br/>
+
+      
+@Html.ValidationMessage("confirm_password", "*")
+<label for="Confirm_password">Confirm Password</label><br/>  
+<input type="password" name="confirm_password"  id ="password"/><br/>
+
+@Html.ValidationMessage("Security_question", "*")
+<label for="Security_question">Security Question</label><br/>  
+
+@Html.ValidationMessage("Security_question", "*")
+<select name = "Security_question">
+               
+                <option>What is your favourite sport Team?</option>
+                <option>Where did you meet your spouse?</option>
+                <option>What is your first pets name?</option>  
+                <option>What was your mothers's maiden name?</option>
+                         
+                </select><br/>
+
+ @Html.ValidationMessage("Security_answer", "*")
+<label for="Security_answer">Security answer</label><br/>  
+<input type="text" name="Security_answer" /><br/>
+
+<br/><br/><br/>
+
+<input type="submit" value="Sign_up">
+
+                
+    </form>
+        <a href ="sign_in.cshtml">
+        Already have an account? Sign in here</a>
+    </div><!--END Postpage-->
+     </div>
+<div class="footer">
+			  <div id ="twitter"></div>         
+	      <div id ="facebook"><br/>&copy;Copyright <a href="#">Amediagrahics</a> All Rights Reserved
+                &nbsp<a href="#">About</a> &nbsp&nbsp&nbsp <a href="#">Sponsors</a> 
+               &nbsp&nbsp&nbsp <a href="#">Creators</a> 
+               &nbsp&nbsp&nbsp  <a href="#">Hangouts</a>  <a href="#"> partners</a> 
+                  &nbsp&nbsp&nbsp<a href="#">Developers</a> <a href="#">Advertising</a> </div> 
+    </div>  
+	
+</body>
+		
+	</html>

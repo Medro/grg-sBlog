@@ -1,0 +1,154 @@
+﻿@{
+var title = Request["Title"];
+var date_published = DateTime.Now;
+var summary = Request["Summary"];
+var body = Request["Body"];
+var div_no = Request["div"];
+
+
+int PostTable;
+
+
+if(IsPost)
+        {
+            if(title.IsEmpty()){
+                ModelState.AddError("Title", "Post Title cannot be empty");
+            }
+
+
+  if(body.IsEmpty()){
+                ModelState.AddError("Body", "Post Body cannot be empty");
+            }
+
+
+  if(summary.IsEmpty()){
+                ModelState.AddError("Summary", "Post summary cannot be empty");
+            }
+
+ }
+}
+
+           @{
+             if(IsPost&&ModelState.IsValid){
+                   
+                  //randomize and insert into any of the 1-4 tables.
+                  int target_div = Int32.Parse(div_no);
+                   var story_preview = body.Substring(0,100);
+                  switch(target_div)
+                 {
+                     case 1:
+                     Database.Open("gRg'sblog")
+                    .Execute("INSERT INTO PostTable1(Title,PublicationDate,Summary,Body,Story_Preview)" + "VALUES(@0,@1,@2,@3,@4)",title,date_published,summary,body,story_preview);
+                     break;
+
+                     case 2:
+                     Database.Open("gRg'sblog")
+                    .Execute("INSERT INTO PostTable2(Title,PublicationDate,Summary,Body,Story_Preview)" + "VALUES(@0,@1,@2,@3,@4)",title,date_published,summary,body,story_preview);
+                     break;
+
+                     case 3:
+                     Database.Open("gRg'sblog")
+                    .Execute("INSERT INTO PostTable3(Title,PublicationDate,Summary,Body,Story_Preview)" + "VALUES(@0,@1,@2,@3,@4)",title,date_published,summary,body,story_preview);
+                     break;
+
+                      case 4:
+                     Database.Open("gRg'sblog")
+                    .Execute("INSERT INTO PostTable4(Title,PublicationDate,Summary,Body,Story_Preview)" + "VALUES(@0,@1,@2,@3,@4)",title,date_published,summary,body,story_preview);
+                     break;
+
+                   
+                 }
+                /* Console.WriteLine(PostTable);*/
+                
+  
+   
+        }
+      }
+        
+
+
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8" />
+	<title>gRg's blog</title>
+	<link rel="stylesheet" type="text/css" href="Content/style.css" />
+    <link rel="icon" type="image/png" href="./images/favicon.png" />
+<link rel="stylesheet" type="text/css" href="Content/reset.css" />
+<link rel="stylesheet" type="text/css" href="Content/superfish.css" />
+
+<!-- This is for the  customized scrollbar--> 
+<link href="Content/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css" />
+     
+      
+        <!--This code below allows the  global styling of the fonts--> 
+        <!--remove and the styling from googlefont is not effected anymore--> 
+       <link href='http://fonts.googleapis.com/css?family=Terminal+Dosis' rel='stylesheet' type='text/css' />
+	<!--[if IE 6]>
+		<link rel="stylesheet" type="text/css" href="ie6.css" />
+	<![endif]-->
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+
+    
+</head>
+<body>
+   <div class="topstrip">
+   <ul>
+				
+				<li><a href="Default.cshtml">Blog</a></li>
+				<li><a href="Hangouts.php">Hangouts</a></li>
+				<li><a href="Connect.php">Connect</a></li>
+			</ul></div>
+
+ 
+<div id="wrapper"><!-- START WRAPPER-->
+        <div id="tagline"><!--START TAGLINE-->
+          	
+       </div><!--END TAGLINE-->	      
+    @Html.ValidationSummary()
+
+	<div id="post-page"><!--START Postpage-->
+     
+  <form method="post" action="">
+
+   <!--the number speciifed here allows you to target any particular div-->
+   @Html.ValidationMessage("div", "*")
+   <label for="div">Targer div</label><br/>
+   <input type="text" name="div" /><br/>
+
+
+      @Html.ValidationMessage("Title", "*")
+<label for="Title">Title</label><br/>
+
+<input type="text" name="Title" /><br/>
+
+      @Html.ValidationMessage("Summary", "*")
+<label for="Summary">Summary</label><br/>
+  
+<input type="text" name="Summary" /><br/>
+
+@Html.ValidationMessage("Body", "*")
+<label for="Body">Body</label><br/>
+     
+    
+    <textarea cols="40" rows="20" name="Body">
+</textarea>
+<br/><br/><br/>
+<div>
+<button type="submit">Post</button>
+</div>
+                
+    </form>
+    </div><!--END Postpage-->
+     </div>
+<div class="footer">
+			  <div id ="twitter"></div>         
+	      <div id ="facebook"><br/>&copy;Copyright <a href="#">Amediagrahics</a> All Rights Reserved
+                &nbsp<a href="#">About</a> &nbsp&nbsp&nbsp <a href="#">Sponsors</a> 
+               &nbsp&nbsp&nbsp <a href="#">Creators</a> 
+               &nbsp&nbsp&nbsp  <a href="#">Hangouts</a>  <a href="#"> partners</a> 
+                  &nbsp&nbsp&nbsp<a href="#">Developers</a> <a href="#">Advertising</a> </div> 
+    </div>  
+	
+</body>
+		
+	</html>

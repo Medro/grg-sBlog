@@ -1,0 +1,162 @@
+﻿@{
+    
+Layout = "~/_Layout2.cshtml";
+var email = Request["email"];
+var date_Last_Login = DateTime.Now;
+var password = Request["password"];
+var db = Database.Open("gRg'sblog");
+var correct_password = "";
+var username ="";
+Session["name_of_user"] = "Sign-in";
+  <script type="text/javascript" src="jquery/jquery-1.8.0.min.js"></script>
+  <script type="text/javascript" src="jquery/jquery-1.8.3.js"></script>
+
+   if(IsPost)
+          {
+            if(email.IsEmpty()){
+                ModelState.AddError("email", "Email is required");
+            }
+            if(password.IsEmpty()){
+                ModelState.AddError("password", "Password is required");
+           }
+
+       }
+                 
+     
+      }
+
+
+@{    
+          
+if(IsPost&&ModelState.IsValid){
+                                  
+                    var check_if_exist = db.QuerySingle("SELECT username FROM users WHERE email = @0", email); /* runs a singular select statement*/
+                    if (check_if_exist == null) {
+                         //error the email may not be correct or does not exist
+                         <script type="text/javascript"> //this script changes the email border to red
+                                        $(function () {
+                                            ($("#email").css({
+                                                //backgroundColor: '#50B23D',
+                                         color: 'red',     
+                                         border: 'solid 2px #b32400'     
+                                                                                                
+                                            })
+                                            )
+                                        })
+                                         $(function () {
+                                            ($("#email").attr({                                          
+                                         value: 'email is incorrect or does not exist'                                         
+                                                                                                
+                                            })
+                                            )
+                                        })
+                                     </script>
+  
+                                                   }
+
+              else {
+                  //email is correct at this point now check if the password provide is correct                 
+                  var all_details = db.Query("SELECT * from users where email = @0",email); 
+                  foreach (var data in all_details) {
+                         correct_password = data.password;
+                         username = data.username;
+                  }         
+                         
+                  if  ( password == correct_password.ToString())
+                  { 
+                      //log the user in since the email and password matches
+                            Session["username"]= username;     
+                         Response.Redirect("Default.cshtml");/* return to default page */ 
+                       
+                        
+                  }
+                    else{
+                        <script type="text/javascript"> //this script changes the email border to red
+                                        $(function () {
+                                            ($("#password").css({
+                                                //backgroundColor: '#50B23D',
+                                         color: 'red',     
+                                         border: 'solid 2px #b32400'     
+                                                                                                
+                                            })
+                                            )
+                                        })
+                                   
+                                     </script>  
+                    }                      
+              }
+          }
+      
+        db.Close();
+
+  }
+
+
+
+@section Header {
+
+   <!-- inserts the code from the header defined in the layout file-->
+   
+}
+
+@section Body{
+ <script>
+     /*the script below reoves the div from the layout since it's not needed*/
+
+     $(function () {
+         $("#_comment1-2").remove();
+
+     });
+</script>
+
+ <script>
+     /*the script below reoves the div from the layout since it's not needed*/
+
+     $(function () {
+         $(".post_comment").remove();
+
+     });
+</script>
+
+<div id="wrapper"><!-- START WRAPPER-->
+        <div id="tagline"><!--START TAGLINE-->
+          	
+       </div><!--END TAGLINE-->	      
+    @Html.ValidationSummary()
+
+	<div id="post-page"><!--START Postpage-->
+     
+  <form method="post" action="">
+
+   <!--the number speciifed here allows you to target any particular div-->
+   @Html.ValidationMessage("email", "*")
+   <label for="div">Email</label><br/>
+   <input type="text" name="email" id="email" required /><br/>
+
+
+      @Html.ValidationMessage("password", "*")
+<label for="Title">Password</label><br/>
+<input type="Password" name="password"  id="password" required /><br/>
+
+     
+<br/><br/><br/>
+<div>
+<button type="submit">Sign in</button>
+   <a href="Password_recovery.cshtml">
+       Forgot my password</a>  <a href ="sign_up.cshtml">
+       | Dont have an account? Sign up here</a>
+</div>
+                
+    </form>
+    </div><!--END Postpage-->
+     </div>
+
+    }
+
+
+  
+
+
+   @section Footer {
+
+}

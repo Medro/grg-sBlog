@@ -1,0 +1,309 @@
+﻿
+@using System.Web.WebPages;
+@using System.Web.Mvc;
+@using System.Web.Helpers;
+@using System.Linq;
+
+@{
+    object username;
+    Layout = "~/_Layout2.cshtml";
+    var db = Database.Open("gRg'sblog");
+
+    
+    var view = 0;
+    var s = Request.QueryString;
+    string p = s.ToString();
+    string u = p.Remove(0,7);  
+
+     if (Session["username"] != null)
+      
+       {
+           
+           username = Session["username"];
+        
+    
+       }
+	
+         else{
+              username = "";
+         }
+
+
+    var posted = Convert.ToInt32(u);  
+    var story1 = db.QuerySingle("SELECT * FROM PostTable1 WHERE ID = @0", posted); /* runs a singular select from table 1*/
+
+    /* run all associated comments */
+    var comments = db.Query("SELECT * FROM comments WHERE post_id  = @0", posted);
+    if (story1 == null) {
+        Response.Redirect("~/");/* return to default page */
+        db.Close();
+        }
+
+
+     else {
+            var d_story = db.Query("SELECT * FROM PostTable1 WHERE ID = @0", posted); /* runs a singular select from table 1*/
+            foreach(var entries in d_story)
+             { 
+                //update the views
+                 view =  entries.views;
+               }
+               view  = view + 1;
+               var new_query  = "UPDATE PostTable1 SET views = " + @view + "WHERE  ID  = @0";
+               db.Execute(new_query,posted);
+        }
+    }
+   
+
+
+@{
+ var comment = Request["comment"];
+     if(IsPost) //if a post is comitted and the value of comment is empty 
+           {
+               if(comment.IsEmpty()){
+                 ModelState.AddError("comment", "comment cannot be empty");
+                   
+             }
+         }
+  
+
+
+    if(IsPost&&ModelState.IsValid)//if a post is comitted and the Model State is Valid 
+    {   
+       
+     //Logic code for making comments
+       var operation = (Request["operation"]); //global variable
+       var num = 0; //global variable
+
+
+       if (operation == "make_comment"){  
+           var count = db.Query("SELECT * FROM PostTable1 WHERE ID  = @0", posted);   
+
+               foreach(var entries in count){
+                 num =  entries.comments;
+               }
+               num = num + 1;
+               var query  = "UPDATE PostTable1 SET comments = " + @num + "WHERE  ID  = @0";
+               db.Execute(query,posted);
+       var date = DateTime.Now;
+       var rating = "P";
+       var user_email = username;     
+       db.Execute("INSERT INTO comments(post_id,comment,Date,rating,user_email)" + "VALUES(@0,@1,@2,@3,@4)",posted,comment,date,rating,user_email);
+          
+      }
+
+
+      //Logic code for making replies
+   if (operation == "make_reply"){ 
+        Response.Redirect("~/");/* return to default page */ 
+                     var date_made = DateTime.Now;                   
+                     var reply =  (Request["reply"]); 
+                     var user_id = "3";
+          var current_comment_id  = (Request["the_comment.commentID"]);      
+           var count = db.Query("SELECT * FROM Comments WHERE ID  = @0",  current_comment_id);   
+
+               foreach(var entries in count){
+                 num =  entries.comments;
+               }
+               num = num + 1;
+               var query  = "UPDATE PostTable1 SET comments = " + @num + "WHERE  ID  = @0";
+               db.Execute(query,posted);                
+              db.Execute("INSERT INTO replies(comment_id, date,reply,user_id)" + "VALUES(@0,@1,@2,@3)",current_comment_id, date_made,reply,user_id);
+          
+      }
+       
+
+      //Logic code for a vote up operation
+      if (operation == "vote_up"){ 
+           Response.Redirect("~/");/* return to default page */
+          var current_comment_id  = (Request["the_comment.commentID"]);      
+          var count = db.Query("SELECT * FROM replies WHERE comment_id  = @0",  current_comment_id);   
+
+               foreach(var entries in count){
+                 num =  entries.up_votes;
+               }
+               num = num + 1;
+               var query  = "UPDATE replies SET up_votes = " + @num + "WHERE  comment_id  = @0";
+               db.Execute(query,posted);
+               
+          
+      }
+
+      //Logic code for down votes
+       if (operation == "down_votes"){         
+          var current_comment_id  = (Request["the_comment.commentID"]);      
+          var count = db.Query("SELECT * FROM replies WHERE comment_id  = @0",  current_comment_id);   
+
+               foreach(var entries in count){
+                 num =  entries.down_votes;
+               }
+               
+               num = num - 1;
+               var query  = "UPDATE replies SET down_votes = " + @num + "WHERE  comment_id  = @0";
+               db.Execute(query,posted);
+          
+      }
+
+
+       if (operation == "sub"){         
+          var current_comment_id  = (Request["do"]);  
+         
+          var count = db.Query("SELECT * FROM replies WHERE  id  = @0",  current_comment_id);   
+
+               foreach(var entries in count){
+                 num =  entries.up_votes;
+               }
+               
+               num = num + 1;
+               var query  = "UPDATE replies SET down_votes = " + @num + "WHERE  id  = @0";
+               db.Execute(query,current_comment_id);
+               Response.Redirect("~/");
+          
+      }
+
+                 
+   
+    }
+
+
+    }
+
+
+
+@section Header {
+
+    
+}
+
+@section Body
+    
+{
+  
+
+<div id="_story1" class="story1"> 
+    <form>
+    <input type="text" value="@u">
+        </form>
+     <span>comments @story1.comments</span>
+                 <p>@story1.Title <br/> @story1.Summary</p>                              
+                  <br/><br/>
+                  <p>@story1.Body</p><br/><br/>
+                    
+                      </div> 
+
+<div id="_block12" class="block12"> 
+         	
+  
+    	@foreach(var the_comment in comments) {
+          <div id ="Show_replies">Reply</div>
+        <br/>  <br/>  <br/> 
+        <div class="comment"> 
+        <div id="comment_logo"></div>
+      
+       
+        <!--This form posts values for vote up operations--> 
+        <form action="" method ="POST" id="vote_up">  
+        <input type="text" name="commentID" value="@the_comment.commentID" hidden>  
+        <input type="text" name="operation" value="vote_up" hidden>                                 
+        </form>
+        <a href="javascript:{}" onclick="document.getElementById('vote_up').submit(); return false;" class="">
+        <div id="vote_up">@the_comment.vote_ups</div>
+        </a>
+        <!--End form--> 
+
+
+        <form action="" method ="post"   id="vote_down">  
+        <input type="text" name="commentID" value="@the_comment.commentID" hidden>  
+        <input type="text" name="operation" value="vote_down" hidden>                                          
+        <a href="javascript:{}" onclick="document.getElementById('vote_down').submit(); return false;" class="">
+        <div id="vote_down"> @the_comment.vote_down</div>
+        </a>
+       
+        </form>
+             <div id="num_replies">Replies @the_comment.replies</div>
+
+        <br/><br/>
+
+        <p> @the_comment.comment </p> <!--place the comment here-->
+                       
+            <br/>    
+              
+            <div class="reply" hidden>
+                                 @{
+                                   
+                            string [] save_replies;  
+                    var replies = db.Query("SELECT * FROM replies WHERE comment_id  = @0", @the_comment.commentID);    
+                   if (replies == null)
+                         { 
+                               // do nothing 
+                         }
+                   else
+                          {   
+                                                           
+            var c = db.Query("SELECT * from replies where comment_id= @0", @the_comment.commentID);
+            var d = db.Query("SELECT * from replies where comment_id= @0", @the_comment.commentID);
+               foreach(var e in c)
+               {
+                                        <form method="POST" action="handle_voteups.cshtml" id="rep">
+                                        <input type="text" name="j" value="@e.comment" hidden>
+                                         <input type="text" name="f" value="@e.id" hidden>                                                                                               
+                                         <input type="Submit" value ="submit"class="" >
+                                         <br/>@e.comment<div id="vote_up"></div><div id="vote_down"></div>
+                                         </form>
+                                                                                               
+                      } 
+                                                                    
+                                    <br/>
+                                      
+                              
+
+                          }
+
+                      
+                              
+                   
+                    }
+                        </div>             
+              </div>  <br/>
+                <br/>
+                <br/>           
+                <br/>      
+           
+   
+         <br/>  
+         <br/>
+         <br/>  
+         <br/>
+         <br/>  
+                <br/>
+
+
+<script>   
+    $("#Show_replies").click(function () {
+            $(".reply").show();
+        });
+       </script>
+        }
+        
+
+
+    <script>
+       $("#plus").click(function(){
+        $(".reply").animate({"left": "+=50px"}, "slow");
+                                    });
+      
+       </script>
+
+}
+    </div>
+  
+}
+
+    
+}
+
+
+
+@section Footer {
+
+}
+
